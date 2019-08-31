@@ -1,0 +1,25 @@
+const config = require('../config')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+const AuthService = {
+    getUserWithUserName(db,user_name){
+        return db('holistic_users')
+        .where({user_name})
+        .first()
+    },
+    comparePasswords(password, hash){
+        return bcrypt.compare(password,hash)
+        
+    },
+    // createJwt(subject, payload) {
+    //     return jwt.sign(payload, config.JWT_SECRET, {
+    //       subject,
+    //       algorithm: 'HS256',
+    //     })
+    //   }
+    }
+
+    
+
+    module.exports = AuthService

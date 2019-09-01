@@ -10,6 +10,8 @@ productRouter
     // .all(requireAuth)
     .get((req,res,next)=>{
         const db = req.app.get('db')
+        const authToken = req.get('Authorization')||''
+        console.log(`authToken:${authToken}`)
         ProductsService.getAllProducts(db)
             .then(products=>{
                 res.json(products)
@@ -28,7 +30,9 @@ productRouter
                     error: `Missing '${key}' in request body`
                 })
 
-                newProducts.user_id = req.user.id
+                newProducts.user_id = req.user_id
+                console.log(`newProduct.user_id: ${newProducts.user_id}`)
+        
 
         ProductsService.postProduct(db, newProducts)
             .then(products=>{
@@ -37,6 +41,7 @@ productRouter
                 .location(path.posix.join(req.originalUrl, `/${products.id}`))
                 .json(products)
             })
+    
             .catch(next)
     })
 

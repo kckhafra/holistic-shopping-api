@@ -1,4 +1,5 @@
 const AuthService =  require('../auth/auth-service')
+const bcrypt = require('bcryptjs')
 
 function requireAuth(req, res, next){
     
@@ -12,9 +13,12 @@ function requireAuth(req, res, next){
         basicToken = authToken.slice('basic'.length, authToken.length)
         
     }
-    const [tokenUserName, tokenPassword]  = basicToken.split(',')
-    console.log(`tokenUsername:${tokenUserName}, tokenPassword: ${tokenPassword}`)
-        
+    let [tokenUserName, tokenPassword]  = basicToken.split(',')
+    
+    bcrypt.hash(tokenPassword, 12)
+        .then((hash)=>{
+            tokenPassword=hash
+        })
 
     if (!tokenUserName || !tokenPassword) {
         
@@ -27,7 +31,7 @@ function requireAuth(req, res, next){
        tokenUserName
    )
    .then(user =>{
-       console.log(user)
+       
     if (!user) {
         return res.status(401).json({ error: 'Unauthorized request' })
       }

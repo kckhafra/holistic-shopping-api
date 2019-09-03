@@ -16,8 +16,9 @@ const ProductsService = {
         .insert(newProduct)    
         .into('holistic_users_inventory')
         .returning('*')
-        // .where('user_id', newProducts.user_id)
+       
     },
+    
     
 
 }

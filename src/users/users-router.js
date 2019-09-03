@@ -11,33 +11,27 @@ usersRouter
        const newUser = {full_name, email, user_name}
        const db = req.app.get('db')
        
-      bcrypt.hash(password, 12)
+      bcrypt.hash(password, 1)
         .then((hash)=>{
             newUser.password=hash
-        })
-        
-            
-        
-        
-        
-        
-        
-        console.log(`newUser: ${newUser.password}`)
-    for (const field of ['full_name', "email",'user_name', 'password'])
-      if (!req.body[field])
-        return res.status(400).json({
-          error: `Missing '${field}' in request body`
-        })
-        return UsersService.postUser(
-            db, newUser
-        )
-        .then(user=>{
-            res
-                .status(201)
-                .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                .json(user)
-        })
-        .catch(next)
+
+            for (const field of ['full_name', "email",'user_name', 'password'])
+                if (!req.body[field])
+                    return res.status(400).json({
+                    error: `Missing '${field}' in request body`
+                    })
+                        return UsersService.postUser(
+                            db, newUser
+                        )
+                        .then(user=>{
+                            res
+                                .status(201)
+                                .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                                .json(user)
+                                
+                        })
+                        .catch(next)
+                        })
     })
 
 module.exports = usersRouter

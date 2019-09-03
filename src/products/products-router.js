@@ -3,7 +3,7 @@ const ProductsService = require('./products-service')
 const path = require('path')
 const productRouter = express.Router()
 const jsonBodyParser = express.json()
-const {requireAuth} = require('../middleware/basic-auth')
+const {requireAuth} = require('../middleware/jwt-auth')
 
 productRouter
     .route('/')
@@ -33,7 +33,9 @@ productRouter
                 newProducts.user_id = req.user_id
                 console.log(`newProduct.user_id: ${newProducts.user_id}`)
         
+        
 
+        
         ProductsService.postProduct(db, newProducts)
             .then(products=>{
                 res

@@ -13,10 +13,12 @@ const UsersService = {
             .into('holistic_users')
             .returning('*')
             
+            
     },
     hashPassword(password) {
         return bcrypt.hash(password, 12)
       },
+
 }
 
 module.exports = UsersService

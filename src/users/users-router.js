@@ -11,7 +11,21 @@ usersRouter
        const newUser = {full_name, email, user_name}
        const db = req.app.get('db')
        
-      bcrypt.hash(password, 1)
+       const passwordError = UsersService.validatePassword(password)
+       if (passwordError) return res.status(400).json({error: passwordError})
+
+       UsersService.hasUserWithUserName(
+            req.app.get('db'),
+            user_name
+            )
+             .then(hasUserWithUserName => {
+               if (hasUserWithUserName)
+                 return res.status(400).json({ error: `Username already taken` })
+
+       
+             })
+
+      bcrypt.hash(password, 12)
         .then((hash)=>{
             newUser.password=hash
 
@@ -20,6 +34,7 @@ usersRouter
                     return res.status(400).json({
                     error: `Missing '${field}' in request body`
                     })
+                
                         return UsersService.postUser(
                             db, newUser
                         )

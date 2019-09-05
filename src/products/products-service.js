@@ -5,6 +5,12 @@ const ProductsService = {
             .from('holistic_users_inventory')
             
     },
+    getMyProducts(db, user_id){
+        return db
+        .select('*')
+        .from('holistic_users_inventory')
+        .where('user_id', user_id )
+    },
     getProductsById(db, params_id) {
             return db
             .select('*')
@@ -18,6 +24,19 @@ const ProductsService = {
         .returning('*')
        
     },
+    deleteProduct(db, id){
+        return db
+        .from('holistic_users_inventory')
+        .where({id})
+        .delete()
+    },
+    updateProduct(db, id, newProductFields){
+        return db('holistic_users_inventory')
+            .where({id})
+            .update(newProductFields)
+        }
+    
+    
     
     
 

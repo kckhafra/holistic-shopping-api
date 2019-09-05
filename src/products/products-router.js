@@ -4,14 +4,15 @@ const path = require('path')
 const productRouter = express.Router()
 const jsonBodyParser = express.json()
 const {requireAuth} = require('../middleware/jwt-auth')
+const AuthService = require('../auth/auth-service')
+  
+  
 
 productRouter
     .route('/')
-    // .all(requireAuth)
+    .all(requireAuth)
     .get((req,res,next)=>{
         const db = req.app.get('db')
-        const authToken = req.get('Authorization')||''
-        console.log(`authToken:${authToken}`)
         ProductsService.getAllProducts(db)
             .then(products=>{
                 res.json(products)
@@ -21,8 +22,8 @@ productRouter
     })
     .post(jsonBodyParser, (req,res,next)=>{
         const db = req.app.get('db')
-        const { service_name, price, remaining_inventory, description, product_category } = req.body
-        const newProducts = { service_name, price, remaining_inventory, description, product_category}
+        const { user_id, service_name, price, remaining_inventory, description, product_category } = req.body
+        const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category}
 
         for(const [key, value] of Object.entries(newProducts))
             if (value == null)
@@ -30,13 +31,12 @@ productRouter
                     error: `Missing '${key}' in request body`
                 })
 
-                newProducts.user_id = req.user_id
-                console.log(`newProduct.user_id: ${newProducts.user_id}`)
         
         
 
         
-        ProductsService.postProduct(db, newProducts)
+        ProductsService
+            .postProduct(db, newProducts)
             .then(products=>{
                 res
                 .status(201)
@@ -46,6 +46,25 @@ productRouter
     
             .catch(next)
     })
+     
+        
+    productRouter
+    .route('/my')
+    .all(requireAuth)
+    .get((req,res,next)=>{
+        const authToken = req.get('Authorization')||''
+        const bearerToken = authToken.slice(7, authToken.length)
+        const payload = AuthService.verifyJwt(bearerToken)
+        const user_id = payload.user_id
+        console.log(`userid: ${user_id}`)
+        const db = req.app.get('db')
+        ProductsService.getMyProducts(db, user_id)
+            .then(products=>{
+                res.json(products)
+            })
+            .catch(next)
+  
+    })
 
     productRouter
         .route('/:product_id')
@@ -53,8 +72,36 @@ productRouter
             const db = req.app.get('db')
             ProductsService.getProductsById(db, req.params.product_id)
             .then(product=>{
-                res.json(product)
+                if(!product){
+                    return res.status(404).json({
+                        error: {message: 'product does not exist'}
+                    })
+                }else res.json(product)
             })
         })
+        .delete((req,res,next)=>{
+            const db = req.app.get('db')
+            ProductsService.deleteProduct(db, req.params.product_id)
+                .then(product=>{
+                    res.status(204).end()
+                })
+        
+        })
+        .patch(jsonBodyParser, (req,res, next)=>{
+            const {service_name,price,remaining_inventory,description,product_category} = req.body
+            const productUpdate = { service_name,price,remaining_inventory,description,product_category}
+            ProductsService.updateProduct(
+                req.app.get('db'),
+                req.params.product_id,
+                productUpdate      
+            )
+                .then((updatedProduct)=>{
+                    res
+                    .status(201)
+                    .json(updatedProduct)
+                })
+                .catch(next)
+        })
+        
 
     module.exports = productRouter

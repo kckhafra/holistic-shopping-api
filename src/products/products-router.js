@@ -21,8 +21,12 @@ productRouter
   
     })
     .post(jsonBodyParser, (req,res,next)=>{
+        const authToken = req.get('Authorization')||''
+        const bearerToken = authToken.slice(7, authToken.length)
+        const payload = AuthService.verifyJwt(bearerToken)
+        const user_id = payload.user_id
         const db = req.app.get('db')
-        const { user_id, service_name, price, remaining_inventory, description, product_category } = req.body
+        const { service_name, price, remaining_inventory, description, product_category } = req.body
         const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category}
 
         for(const [key, value] of Object.entries(newProducts))
@@ -31,10 +35,6 @@ productRouter
                     error: `Missing '${key}' in request body`
                 })
 
-        
-        
-
-        
         ProductsService
             .postProduct(db, newProducts)
             .then(products=>{
@@ -56,7 +56,6 @@ productRouter
         const bearerToken = authToken.slice(7, authToken.length)
         const payload = AuthService.verifyJwt(bearerToken)
         const user_id = payload.user_id
-        console.log(`userid: ${user_id}`)
         const db = req.app.get('db')
         ProductsService.getMyProducts(db, user_id)
             .then(products=>{

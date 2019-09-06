@@ -11,7 +11,7 @@ To try out the app you can create you own login credentials on the registration 
 ### Technologies used
 [Front-end](https://github.com/kckhafra/holistic-shopping-client): The front end was built with JavaScript, React, HTML, CSS, AND API GET, POST, PATCH, DELETE REQUEST
 
-Back-End: The back-end was built with Node.js and PSQL. The login was authenticated through JSON Web Token(JWT). Database stored at Heroku. 
+Back-End: The back-end was built with Node.js, PSQL and Express. The login was authenticated through JSON Web Token(JWT). Database stored at Heroku. 
 
 ### Description
 This web app currently allows you to post products for sell and see products others post. You can also manage your own products by eiher editing or deleting your product. All products are stored in a database created by PSQL.  

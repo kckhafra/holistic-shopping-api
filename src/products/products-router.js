@@ -67,6 +67,7 @@ productRouter
 
     productRouter
         .route('/:product_id')
+        .all(requireAuth)
         .get((req,res,)=>{
             const db = req.app.get('db')
             ProductsService.getProductsById(db, req.params.product_id)

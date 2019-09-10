@@ -1,26 +1,32 @@
-# Express Boilerplate!
+# Holistic Health Shop
+Holistic Health Shop allows you to buy and sell holistic goods.
 
-This is a boilerplate project used for starting new projects!
+### Demo
+[Live App](https://holistic-client.kckhafra.now.sh/)
 
-## Set up
+To try out the app you can create you own login credentials on the registration page or you can use the following demo login credentials. 
+- Username: holistic
+- Password: holistic
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+### Technologies used
+[Front-end](https://github.com/kckhafra/holistic-shopping-client): The front end was built with JavaScript, React, HTML, CSS, AND API GET, POST, PATCH, DELETE REQUEST
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+Back-End: The back-end was built with Node.js, PSQL and Express. The login was authenticated through JSON Web Token(JWT). Database stored at Heroku. 
 
-## Scripts
+### Description
+This web app currently allows you to post products for sell and see products others post. You can also manage your own products by eiher editing or deleting your product. All products are stored in a database created by PSQL.  
 
-Start the application `npm start`
+## Home Page
+![Login Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.46.40%20PM.png)
 
-Start nodemon for the application `npm run dev`
+## Registration Page
+![Registration Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.50.25%20PM.png)
 
-Run the tests `npm test`
+## Login Page
+![Login Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.50.39%20PM.png)
 
-## Deploying
+## Sale Product Form
+![Sale Product Form](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.51.52%20PM.png)
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+## Manage Product
+![Manage Product](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%206.57.59%20PM.png)

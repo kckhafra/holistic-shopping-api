@@ -17,6 +17,12 @@ const ProductsService = {
             .from('holistic_users_inventory')
             .where('id', params_id)
         },
+    getProductsBySearch(db, searchTerm) {
+            return db
+            .select('*')
+            .from('holistic_users_inventory')
+            .where('service_name', 'ILIKE', `%${searchTerm}%`)
+        },
     postProduct(db, newProduct) {
         return db
         .insert(newProduct)    

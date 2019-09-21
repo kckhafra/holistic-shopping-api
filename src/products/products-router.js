@@ -20,14 +20,15 @@ productRouter
             .catch(next)
   
     })
+    
     .post(jsonBodyParser, (req,res,next)=>{
         const authToken = req.get('Authorization')||''
         const bearerToken = authToken.slice(7, authToken.length)
         const payload = AuthService.verifyJwt(bearerToken)
         const user_id = payload.user_id
         const db = req.app.get('db')
-        const { service_name, price, remaining_inventory, description, product_category } = req.body
-        const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category}
+        const { service_name, price, remaining_inventory, description, product_category, images } = req.body
+        const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category, images}
 
         for(const [key, value] of Object.entries(newProducts))
             if (value == null)
@@ -88,8 +89,8 @@ productRouter
         
         })
         .patch(jsonBodyParser, (req,res, next)=>{
-            const {service_name,price,remaining_inventory,description,product_category} = req.body
-            const productUpdate = { service_name,price,remaining_inventory,description,product_category}
+            const {service_name,price,remaining_inventory,description,product_category,images} = req.body
+            const productUpdate = { service_name,price,remaining_inventory,description,product_category,images}
             ProductsService.updateProduct(
                 req.app.get('db'),
                 req.params.product_id,

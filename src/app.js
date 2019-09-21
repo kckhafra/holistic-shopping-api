@@ -8,6 +8,7 @@ const productsRouter = require('./products/products-router')
 const usersRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
 const checkoutRouter = require('./checkout/checkout-router')
+const guestProductRouter = require('./unprotected-routes/guest-products')
 
 
 const app = express()
@@ -24,7 +25,8 @@ app.use('/api/products', productsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/charge', checkoutRouter)
-
+app.use('/api/guest-products', guestProductRouter)
+// app.use(require("body-parser").text());
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

@@ -2,6 +2,7 @@ const express = require('express');
 const jsonBodyParser = express.json()
 const checkoutRouter = express.Router()
 
+
 checkoutRouter
     .route('/')
     .post( async (req, res) => {

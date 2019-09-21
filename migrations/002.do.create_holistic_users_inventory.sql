@@ -14,5 +14,6 @@ CREATE TABLE holistic_users_inventory(
     price NUMERIC (9, 2) NOT NULL,
     remaining_inventory INTEGER NOT NULL,
     description TEXT NOT NULL,
-    product_category category NOT NULL
+    product_category category NOT NULL,
+    images TEXT
 );

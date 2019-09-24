@@ -6,11 +6,11 @@ const ProductsService = require('../products/products-service')
 guestProductRouter
         .route('/')
         .get((req,res,next)=>{
-            console.log(`pearams Please: ${req.query.search_term}`)
+            console.log(`params Please: ${req.query.search_term}`)
             const db = req.app.get('db')
             if (!req.query.search_term){
                     const db = req.app.get('db')
-                    ProductsService.getAllProducts(db)
+                    return ProductsService.getAllProducts(db)
                         .then(products=>{
                             res.json(products)
                         })

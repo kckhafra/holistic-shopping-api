@@ -58,12 +58,32 @@ productRouter
         const payload = AuthService.verifyJwt(bearerToken)
         const user_id = payload.user_id
         const db = req.app.get('db')
-        ProductsService.getMyProducts(db, user_id)
+        console.log(req.query.search_term)
+
+        if (!req.query.search_term||req.query.search_term==="undefined"){
+            const db = req.app.get('db')
+            ProductsService.getMyProducts(db, user_id)
             .then(products=>{
                 res.json(products)
             })
             .catch(next)
-  
+        }else{
+        ProductsService.searchMyProducts(db, user_id, req.query.search_term)
+            .then(products=>{
+                res.json(products)
+            })
+            .catch(next)
+        }
+        
+    //     else{
+    //     ProductsService.searchMyProducts(db, user_id, req.query.search_term)
+    //     .then(products=>{
+    //         console.log(`product I want: ${products}, ${req.query.search_term}`)
+    //         res.json(products)
+    //     })
+    //     .catch(next)
+    // }
+
     })
 
     productRouter

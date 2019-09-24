@@ -26,7 +26,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/charge', checkoutRouter)
 app.use('/api/guest-products', guestProductRouter)
-// app.use(require("body-parser").text());
+app.use(require("body-parser").text());
 
 app.get('/', (req, res) => {
     res.send('Hello, world!')

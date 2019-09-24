@@ -5,11 +5,19 @@ const ProductsService = {
             .from('holistic_users_inventory')
             
     },
-    getMyProducts(db, user_id){
+    getMyProducts(db, user_id, searchTerm){
         return db
         .select('*')
         .from('holistic_users_inventory')
         .where('user_id', user_id )
+        
+    },
+    searchMyProducts(db, user_id, searchTerm){
+        return db
+        .select('*')
+        .from('holistic_users_inventory')
+        .where('service_name', 'ILIKE', `%${searchTerm}%`)
+        .andWhere('user_id', user_id )
     },
     getProductsById(db, params_id) {
             return db

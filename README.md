@@ -4,19 +4,19 @@
 - Returns data that has been edited
 
 
-### URL
+## URL
 - /api/products
 - /api/guest-products
 - /api/auth
 - /api/users
 
-### Method:
+## Method:
 - GET
 - POST
 - DELETE
 - PATCH
 
-### Data Params
+## Data Params
 #### Login Credentials Payload
 - {username: "holistic", password: "holistic"}
 #### Products Payload
@@ -27,7 +27,7 @@ product_category: "category"
 remaining_inventory: "inventory"
 service_name: "name"}
 
-### Success Response: 
+## Success Response: 
 - Code: 200
 - Content: { description: "description"
 images: "image"
@@ -36,7 +36,7 @@ product_category: "category"
 remaining_inventory: "inventory"
 service_name: "name"}
 
-### Error Response
+## Error Response
 - Code: 404 NOT FOUND
 Content {error: "Wrong user name or password"}
 OR

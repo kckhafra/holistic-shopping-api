@@ -17,9 +17,9 @@
 - PATCH
 
 ### Data Params
-# Login Credentials Payload
+#### Login Credentials Payload
 - {username: "holistic", password: "holistic"}
-# Products Payload
+#### Products Payload
 - { description: "description"
 images: "image"
 price: "number"

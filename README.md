@@ -1,32 +1,46 @@
 # Holistic Health Shop
-Holistic Health Shop allows you to buy and sell holistic goods.
+- Returns json data about all products
+- Returns json data and post data for a specific product
+- Returns data that has been edited
 
-### Demo
-[Live App](https://holistic-client.kckhafra.now.sh/)
 
-To try out the app you can create you own login credentials on the registration page or you can use the following demo login credentials. 
-- Username: holistic
-- Password: holistic
+## URL
+- /api/products
+- /api/guest-products
+- /api/auth
+- /api/users
 
-### Technologies used
-[Front-end](https://github.com/kckhafra/holistic-shopping-client): The front end was built with JavaScript, React, HTML, CSS, AND API GET, POST, PATCH, DELETE REQUEST
+## Method:
+- GET
+- POST
+- DELETE
+- PATCH
 
-Back-End: The back-end was built with Node.js, PSQL and Express. The login was authenticated through JSON Web Token(JWT). Database stored at Heroku. 
+## Data Params
+#### Login Credentials Payload
+- {username: "holistic", password: "holistic"}
+#### Products Payload
+- { description: "description"
+images: "image"
+price: "number"
+product_category: "category"
+remaining_inventory: "inventory"
+service_name: "name"}
 
-### Description
-This web app currently allows you to post products for sell and see products others post. You can also manage your own products by eiher editing or deleting your product. All products are stored in a database created by PSQL.  
+## Success Response: 
+- Code: 200
+- Content: { description: "description"
+images: "image"
+price: "number"
+product_category: "category"
+remaining_inventory: "inventory"
+service_name: "name"}
 
-## Home Page
-![Login Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.46.40%20PM.png)
+## Error Response
+- Code: 404 NOT FOUND
+Content {error: "Wrong user name or password"}
+OR
+- Code: 401 UNAUTHORIZED
+Content: {error: "unauthorized to make request"}
 
-## Registration Page
-![Registration Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.50.25%20PM.png)
 
-## Login Page
-![Login Page](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.50.39%20PM.png)
-
-## Sale Product Form
-![Sale Product Form](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%204.51.52%20PM.png)
-
-## Manage Product
-![Manage Product](https://raw.githubusercontent.com/kckhafra/holistic-shopping-client/master/Pictures/Screen%20Shot%202019-09-05%20at%206.57.59%20PM.png)

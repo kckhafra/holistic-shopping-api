@@ -21,9 +21,10 @@ const ProductsService = {
     },
     getProductsById(db, params_id) {
             return db
-            .select('*')
+            .join('holistic_users', 'holistic_users_inventory.user_id', '=', 'holistic_users.id' )
+            .select('holistic_users_inventory.*', 'holistic_users.full_name', 'holistic_users.email')
             .from('holistic_users_inventory')
-            .where('id', params_id)
+            .where('holistic_users_inventory.id', params_id)
         },
     getProductsBySearch(db, searchTerm) {
             return db

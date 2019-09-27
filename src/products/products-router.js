@@ -74,15 +74,6 @@ productRouter
             })
             .catch(next)
         }
-        
-    //     else{
-    //     ProductsService.searchMyProducts(db, user_id, req.query.search_term)
-    //     .then(products=>{
-    //         console.log(`product I want: ${products}, ${req.query.search_term}`)
-    //         res.json(products)
-    //     })
-    //     .catch(next)
-    // }
 
     })
 

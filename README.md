@@ -1,26 +1,46 @@
-# Express Boilerplate!
+# Holistic Health Shop
+- Returns json data about all products
+- Returns json data and post data for a specific product
+- Returns data that has been edited
 
-This is a boilerplate project used for starting new projects!
 
-## Set up
+## URL
+- /api/products
+- /api/guest-products
+- /api/auth
+- /api/users
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Method:
+- GET
+- POST
+- DELETE
+- PATCH
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+## Data Params
+#### Login Credentials Payload
+- {username: "holistic", password: "holistic"}
+#### Products Payload
+- { description: "description"
+images: "image"
+price: "number"
+product_category: "category"
+remaining_inventory: "inventory"
+service_name: "name"}
 
-## Scripts
+## Success Response: 
+- Code: 200
+- Content: { description: "description"
+images: "image"
+price: "number"
+product_category: "category"
+remaining_inventory: "inventory"
+service_name: "name"}
 
-Start the application `npm start`
+## Error Response
+- Code: 404 NOT FOUND
+Content {error: "Wrong user name or password"}
+OR
+- Code: 401 UNAUTHORIZED
+Content: {error: "unauthorized to make request"}
 
-Start nodemon for the application `npm run dev`
 
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.

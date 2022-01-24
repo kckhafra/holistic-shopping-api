@@ -20,10 +20,15 @@ productRouter
             .catch(next)
   
     })
+    
     .post(jsonBodyParser, (req,res,next)=>{
+        const authToken = req.get('Authorization')||''
+        const bearerToken = authToken.slice(7, authToken.length)
+        const payload = AuthService.verifyJwt(bearerToken)
+        const user_id = payload.user_id
         const db = req.app.get('db')
-        const { user_id, service_name, price, remaining_inventory, description, product_category } = req.body
-        const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category}
+        const { service_name, price, remaining_inventory, description, product_category, images } = req.body
+        const newProducts = { user_id, service_name, price, remaining_inventory, description, product_category, images}
 
         for(const [key, value] of Object.entries(newProducts))
             if (value == null)
@@ -31,10 +36,6 @@ productRouter
                     error: `Missing '${key}' in request body`
                 })
 
-        
-        
-
-        
         ProductsService
             .postProduct(db, newProducts)
             .then(products=>{
@@ -56,18 +57,29 @@ productRouter
         const bearerToken = authToken.slice(7, authToken.length)
         const payload = AuthService.verifyJwt(bearerToken)
         const user_id = payload.user_id
-        console.log(`userid: ${user_id}`)
         const db = req.app.get('db')
-        ProductsService.getMyProducts(db, user_id)
+        console.log(req.query.search_term)
+
+        if (!req.query.search_term||req.query.search_term==="undefined"){
+            const db = req.app.get('db')
+            ProductsService.getMyProducts(db, user_id)
             .then(products=>{
                 res.json(products)
             })
             .catch(next)
-  
+        }else{
+        ProductsService.searchMyProducts(db, user_id, req.query.search_term)
+            .then(products=>{
+                res.json(products)
+            })
+            .catch(next)
+        }
+
     })
 
     productRouter
         .route('/:product_id')
+        .all(requireAuth)
         .get((req,res,)=>{
             const db = req.app.get('db')
             ProductsService.getProductsById(db, req.params.product_id)
@@ -88,8 +100,8 @@ productRouter
         
         })
         .patch(jsonBodyParser, (req,res, next)=>{
-            const {service_name,price,remaining_inventory,description,product_category} = req.body
-            const productUpdate = { service_name,price,remaining_inventory,description,product_category}
+            const {service_name,price,remaining_inventory,description,product_category,images} = req.body
+            const productUpdate = { service_name,price,remaining_inventory,description,product_category,images}
             ProductsService.updateProduct(
                 req.app.get('db'),
                 req.params.product_id,
